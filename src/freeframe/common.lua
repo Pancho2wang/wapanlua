@@ -149,16 +149,13 @@ function wp_class(classname, super)
         cls.Init = Init
 		cls.Uninit = Uninit
         function cls.new(...)
-            -- local instance = setmetatable({}, cls)
-            local instance = {}
-            setmetatable(instance, {__index = cls})
+            local instance = setmetatable({}, {__index = cls})
+            -- local instance = setmetatable({}, {__index = cls})
+            -- 相当于：	local instance = {}
+            -- 			setmetatable(instance, {__index = cls})
             instance.super = cls
             instance.__cname = cls.__cname
             instance.__ctype = 3
-            -- setmetatable(instance, metatb)
-            -- print("```````````````````````````", instance)
-            -- ShowTB(instance)
-            -- print("````````````````````````````", #instance)
             -- instance.class = cls
             -- instance:ctor(...)
             return instance
