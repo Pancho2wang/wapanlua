@@ -5,12 +5,37 @@
 -- Description  : 
 -- Modify       : 
 --=======================================================================
+local a = wp_class("a")
+function a:_Init( ... )
+    self.ca = 1
+    return 1
+end
+function a:printa( ... )
+    print("ca ===", self.ca)
+end
+function a:changeca( ... )
+    self.ca = 3
+end
+
+local b = wp_class("b", a)
+function b:_Init( ... )
+    self.cb = 2
+    return 1
+end
+function b:printb( ... )
+    self:changeca()
+    print("cb ===", self.cb, self.ca)
+end
 
 local LoadScene = wp_class("LoadScene", function()
 	return cc.Scene:create()
 end)
 
 function LoadScene.create()
+    local x = b.new()
+    x:Init()
+    x:printa()
+    x:printb()
 	local scene = LoadScene.new()
 	scene:addChild(scene:createLayer())
 	return scene
