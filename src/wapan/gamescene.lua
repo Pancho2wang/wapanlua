@@ -23,31 +23,36 @@ end
 function GameScene:createLayer()
 	local layer = cc.Layer:create()
 	local label = cc.LabelTTF:create("Game Scene.", "Arial", 30)
-	label:setColor(cc.c3b(0,133,255))
+	label:setColor(cc.c3b(0,133,0))
 	label:setPosition(cc.p(self.visibleSize.width/2, self.visibleSize.height/2))
 	layer:addChild(label)
+
+    local function menuCallbackOpenPopup()
+        local scene = ClassMgr:GetClassByName("GameScene")
+        local sceneGame = scene.create()
+        cc.Director:getInstance():popScene()
+        cc.Director:getInstance():pushScene(sceneGame)
+    end
+     -- add the left-bottom "tools" menu to invoke menuPopup
+    local menuToolsItem = cc.MenuItemImage:create("menu1.png", "land.png")
+    menuToolsItem:setPosition(0, 0)
+    menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
 
     local function menuCallbackReloadFile()
         DofileScript()
     end
-
-	local function menuCallbackOpenPopup()
-		-- DofileScript()
-        local scene = ClassMgr:GetClassByName("GameScene")
-        local sceneGame = scene.create()
-        CCDirector:getInstance():popScene()
-        CCDirector:getInstance():pushScene(sceneGame)
-    end
-
-    local reloadItem = cc.MenuItemImage:create("menu1.png", "menu1.png")
+    local reloadItem = cc.MenuItemImage:create("menu1.png", "land.png")
     reloadItem:setPosition(100, 0)
     reloadItem:registerScriptTapHandler(menuCallbackReloadFile)
 
-    -- add the left-bottom "tools" menu to invoke menuPopup
-    local menuToolsItem = cc.MenuItemImage:create("menu1.png", "menu1.png")
-    menuToolsItem:setPosition(0, 0)
-    menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
-    local menuTools = cc.Menu:create(menuToolsItem, reloadItem)
+    local function backScene()
+        cc.Director:getInstance():popScene()
+    end
+    local backItem = cc.MenuItemImage:create("menu1.png", "land.png")
+    backItem:setPosition(200, 0)
+    backItem:registerScriptTapHandler(backScene)
+
+    local menuTools = cc.Menu:create(menuToolsItem, reloadItem, backItem)
     local itemWidth = menuToolsItem:getContentSize().width
     local itemHeight = menuToolsItem:getContentSize().height
     menuTools:setPosition(itemWidth, itemHeight)

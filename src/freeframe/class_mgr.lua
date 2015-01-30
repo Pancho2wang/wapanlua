@@ -7,42 +7,42 @@
 --=======================================================================
 
 if not ClassMgr then
-	ClassMgr = { local_class_list = {}, }
+	ClassMgr = { class_list = {}, }
 end
 
 function ClassMgr:Uninit()
-	for class_name, _ in pairs(self.local_class_list) do
-		self.local_class_list[class_name] = nil
+	for class_name, _ in pairs(self.class_list) do
+		self.class_list[class_name] = nil
 	end
-	self.local_class_list = nil
+	self.class_list = nil
 	return 1
 end
 
 function ClassMgr:Init()
-	self.local_class_list = {}
+	self.class_list = {}
 	return 1
 end
 
 function ClassMgr:Add(class_name, class)
-	if self.local_class_list[class_name] then
+	if self.class_list[class_name] then
 		return
 	end
-	self.local_class_list[class_name] = class
+	self.class_list[class_name] = class
 end
 
 function ClassMgr:Remove(class_name)
-	if not self.local_class_list[class_name] then
+	if not self.class_list[class_name] then
 		return
 	end
-	self.local_class_list[class_name] = nil
+	self.class_list[class_name] = nil
 end
 
 function ClassMgr:GetClassByName(class_name)
-	if not self.local_class_list[class_name] then
+	if not self.class_list[class_name] then
 		assert(false, "No class["..class_name.."].")
 		return
 	end
-	return self.local_class_list[class_name]
+	return self.class_list[class_name]
 end
 
 local function InitClassMgr()

@@ -32,11 +32,11 @@ function LoadScene:createLayer()
 		-- DofileScript()
 		local scene = ClassMgr:GetClassByName("GameScene")
     	local sceneGame = scene.create()
-		CCDirector:getInstance():pushScene(sceneGame)
+		cc.Director:getInstance():pushScene(sceneGame)
     end
 
     -- add the left-bottom "tools" menu to invoke menuPopup
-    local menuToolsItem = cc.MenuItemImage:create("menu1.png", "menu1.png")
+    local menuToolsItem = cc.MenuItemImage:create("menu1.png", "land.png")
     menuToolsItem:setPosition(0, 0)
     menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
     local menuTools = cc.Menu:create(menuToolsItem)
